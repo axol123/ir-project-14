@@ -33,7 +33,6 @@ for file in glob.glob(os.path.join(path, '*.java')):
 	in_single_comment=False
 	doc_string=''
 	parsing = ''
-	parse_interface = False
 	nr_brackets=0
 	skip_until=-1
 	# For each line in the file
@@ -94,6 +93,7 @@ for file in glob.glob(os.path.join(path, '*.java')):
 						}
 						res = es.index(index=parsing, body=doc)
 						parsing=''
+                        doc_string=''
 					# Add field to elasticsearch index
 					elif (token==';' and len(doc_string) > 0):
 						parsing='field'
