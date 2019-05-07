@@ -95,7 +95,7 @@ for file in glob.glob(os.path.join(path, '*.java')):
 						res = es.index(index=parsing, body=doc)
 						parsing=''
 					# Add field to elasticsearch index
-					elif (token==';'):
+					elif (token==';' and len(doc_string) > 0):
 						parsing='field'
 						doc = {
 						    'declaration': doc_string[1:],
