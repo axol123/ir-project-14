@@ -43,7 +43,7 @@
                 </div>
                 <div class="panel-body">
                 <!-- display the latitude and longitude of the city  -->
-                    <p>line number: {{ result._source.line_nr }}, <a :href="'https://Github.com/'+result._source.file_location" target=_blank>link</a></p>    <!-- display correct info  -->
+                    <p>line number: {{ result._source.line_nr }}, <a :href="'https://Github.com/'+result._source.file_location+'#L'+result._source.line_nr" target=_blank>link</a></p>    <!-- display correct info  -->
                 </div>
             </div> 
         </div>
