@@ -52,8 +52,8 @@ app.get('/', function(req, res){
   app.get('/search', function (req, res){
     // declare the query object to search elastic search and return only 200 results from the first result found. 
     // also match any data where the name is like the query string sent in
-    console.log('inside app.get')
-    console.log(req.query)
+    // console.log('inside app.get')
+    // console.log(req.query)
     let body = {
       size: 200,
       from: 0, 

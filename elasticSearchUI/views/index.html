@@ -29,6 +29,11 @@
         </div> 
     </div> 
     <div class="row">
+        <div class="col-md-4 col-md-offset-3">
+            <p id="num_results" style="display: none">{{results.length}} matches found</p>
+        </div> 
+    </div> 
+    <div class="row">
         <div class="col-md-3" v-for="result in results">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -71,7 +76,8 @@
                 })
                     .then(response => {
                         this.results = response.data;
-
+                        var num_res = document.getElementById("num_results")
+                        num_res.style.display = this.query ? "block": "none"
                     })
             }
         },
