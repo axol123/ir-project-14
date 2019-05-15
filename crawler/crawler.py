@@ -22,7 +22,7 @@ def get_filepaths(repository :str, extension :str) -> str:
     for entry in res['tree']:
         path = entry['path']
         if path.endswith(extension):
-            paths += repository + "/" + "master/" + path + "\n"
+            paths += repository + "/blob/master/" + path + "\n"
             sys.stdout.write('.')
             sys.stdout.flush()
     return paths
@@ -36,8 +36,9 @@ def download_files(path_index :str, filepath :str, directory :str) -> str:
     file_url = githubusercontent_prefix + filepath;
     id = uuid.uuid1().__str__()
     filename = id + "-" + filepath.split("/")[-1]
-    res = urllib.request.urlretrieve(file_url, directory + filename)
+    res = urllib.request.urlretrieve(file_url.replace('blob/',''), directory + filename)    # Temporarily replace blob before download
     path_index += filename + " " + filepath + "\n"
+    
     return path_index
 
 def main(argv):
