@@ -14,17 +14,16 @@ with open(meta_file) as f:
 		meta_dict[key] = val
 
 
-# Files for testing
-# File with single line comments crawler/sources/48823c52-6be1-11e9-9546-a8667f0ad154-TestRSeedTestSuccess2.java
-# Interface 46dc67ec-6be1-11e9-9546-a8667f0ad154-Doc.java
-# file_id="crawler/sources/48823c52-6be1-11e9-9546-a8667f0ad154-TestRSeedTestSuccess2.java"
-# file_id = "crawler/sources/46dc67ec-6be1-11e9-9546-a8667f0ad154-Doc.java"
-# text = open(file_id).read()
 
 
 es = Elasticsearch()
+es.indices.delete(index='_all')
+print("Deleting old stuff")
+time.sleep(1)
+
 path = "crawler/sources/"
 # For each file in the sources directory
+print("Adding new stuff")
 for file in glob.glob(os.path.join(path, '*.java')):
 	# Initialize help variables for file parsing
 	file_id = re.sub(path, '', file)
@@ -121,7 +120,7 @@ for file in glob.glob(os.path.join(path, '*.java')):
 
 time.sleep(1)
 
-# # Test queries
+# # Test queries make sure to time.sleep between previous code and these test lines
 # res = es.search(index="class", body={"query": {"match_all": {}}})
 # print("Got %d Hits:" % res['hits']['total'])
 # for hit in res['hits']['hits']:
