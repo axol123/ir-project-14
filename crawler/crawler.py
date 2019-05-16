@@ -1,71 +1,51 @@
-import urllib.request
 import json
-import sys
-import re
 import uuid
+import sys
+import subprocess
 
-query_prefix = "https://api.github.com/repos/"
-query_suffix = "/git/trees/master?recursive=1"
-githubusercontent_prefix = "https://raw.githubusercontent.com/"
+clone_prefix = "https://github.com/"
+clone_suffix = ".git"
 
-"""
-Returns paths to files within the specified repository ending with specified 
-file extension.
-
-repository must include owner and repository name. E.g. "henrikglass/erodr"
-"""
-def get_filepaths(repository :str, extension :str) -> str:
-    query = query_prefix + repository + query_suffix;
-    print(query)
-    res = urllib.request.urlopen(query)
-    res = json.loads(res.read().decode('utf-8'))
-    paths = ""
-    for entry in res['tree']:
-        path = entry['path']
-        if path.endswith(extension):
-            paths += repository + "/blob/master/" + path + "\n"
-            sys.stdout.flush()
-    return paths
-
-"""
-downloads files from github given a path (<owner>/<repo>/<branch/filepath>) and
-stores them in specified directory, prepended with a unique id. A mapping of
-the unique filename to its filepath are added to path_index
-"""
-def download_files(path_index :str, filepath :str, directory :str) -> str:
-    file_url = githubusercontent_prefix + filepath;
-    id = uuid.uuid1().__str__()
-    filename = id + "-" + filepath.split("/")[-1]
-    res = urllib.request.urlretrieve(file_url.replace('blob/',''), directory + filename)    # Temporarily replace blob before download
-    path_index += filename + " " + filepath + "\n"
+#            continue
+#        ssh_url = clone_prefix + repo.rstrip() + clone_suffix
+#        subprocess.run(["git", "clone", ssh_url])
+#        result = subprocess.run(["find", repo.split("/")[1], "-iname '*.java'"])
+#        print(result.stdout)
     
+def clone_and_copy(repo :str) -> str:
+    path_index = ""
+
+    # clone rep
+    repo = repo.rstrip()
+    https_url = clone_prefix + repo + clone_suffix
+    subprocess.run(["git", "clone", https_url])
+
+    # find all *.java files
+    result = subprocess.check_output(["find", repo.split("/")[1], "-iname", "*.java"]).decode(sys.stdout.encoding)
+    fp_list = result.split("\n")
+
+    # move to sources/ and append to path_index
+    for filepath in fp_list:
+        if not filepath:
+            continue
+        id = uuid.uuid1().__str__()
+        filename = id + "-" + filepath.split("/")[-1]
+        path_index += filename + " " + repo + "/blob/master/" + filepath + "\n"
+        subprocess.run(["cp", filepath, "sources/"+filename])
+
+    # remove repo when complete
+    subprocess.run(["rm", "-rf", repo.split("/")[-1]])
+
     return path_index
 
-def main(argv):
-    print("Getting filepaths")
-    paths = ""
-    for line in sys.stdin:
-        if line[0] == '#':
-            continue
-        try:
-            paths += get_filepaths(line.rstrip(), ".java")
-        except urllib.error.HTTPError as err:
-            if err.code == 404:
-                continue
-
-    sys.stdout.write('\n')
-    sys.stdout.write("Downloading files.")
+if __name__ == "__main__":
     path_index = ""
-    for path in paths.splitlines():
-        sys.stdout.write('.')
-        sys.stdout.flush()
-        path_index = download_files(path_index, path, "sources/")
-    sys.stdout.write('\n')
-
+    for repo in sys.stdin:
+        print("processing " + repo)
+        if repo[0] == '#':
+            continue
+        path_index += clone_and_copy(repo)
     f = open("path_index.txt", "w+")
     f.write(path_index)
     f.close()
-    
-    
-if __name__ == "__main__":
-    main(sys.argv[1:])
+    #main(sys.argv[1:])

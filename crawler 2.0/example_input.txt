@@ -1,4 +1,0 @@
-# CyC2018/CS-Notes
-# iluwatar/java-design-patterns
-# elastic/elasticsearch
-TheAlgorithms/Java
