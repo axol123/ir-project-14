@@ -16,6 +16,7 @@ repository must include owner and repository name. E.g. "henrikglass/erodr"
 """
 def get_filepaths(repository :str, extension :str) -> str:
     query = query_prefix + repository + query_suffix;
+    print(query)
     res = urllib.request.urlopen(query)
     res = json.loads(res.read().decode('utf-8'))
     paths = ""
@@ -23,7 +24,6 @@ def get_filepaths(repository :str, extension :str) -> str:
         path = entry['path']
         if path.endswith(extension):
             paths += repository + "/blob/master/" + path + "\n"
-            sys.stdout.write('.')
             sys.stdout.flush()
     return paths
 
@@ -42,7 +42,7 @@ def download_files(path_index :str, filepath :str, directory :str) -> str:
     return path_index
 
 def main(argv):
-    sys.stdout.write("Getting filepaths")
+    print("Getting filepaths")
     paths = ""
     for line in sys.stdin:
         if line[0] == '#':
