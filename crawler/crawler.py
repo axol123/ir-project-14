@@ -47,8 +47,12 @@ def main(argv):
     for line in sys.stdin:
         if line[0] == '#':
             continue
-        paths += get_filepaths(line.rstrip(), ".java")
- 
+        try:
+            paths += get_filepaths(line.rstrip(), ".java")
+        except urllib.error.HTTPError as err:
+            if err.code == 404:
+                continue
+
     sys.stdout.write('\n')
     sys.stdout.write("Downloading files.")
     path_index = ""

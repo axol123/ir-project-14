@@ -1,1 +1,5 @@
-TheAlgorithms/Java
+CyC2018/CS-Notes
+iluwatar/java-design-patterns
+elastic/elasticsearch
+Snailclimb/JavaGuide
+ReactiveX/RxJava
