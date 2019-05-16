@@ -1,4 +1,1 @@
-# henrikglass/erodr
-# henrikglass/brainfucked
-# henrikglass/modbat
 TheAlgorithms/Java
