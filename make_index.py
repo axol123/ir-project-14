@@ -24,8 +24,11 @@ time.sleep(1)
 path = "crawler/sources/"
 # For each file in the sources directory
 print("Adding new stuff")
+file_num=0
 for file in glob.glob(os.path.join(path, '*.java')):
-	print("Processing file {}".format(file))
+	file_num = file_num+1
+
+	print("Processing file number: {}, file: {}".format(file_num, file))
 	# Initialize help variables for file parsing
 	file_id = re.sub(path, '', file)
 	text = open(file).read()
