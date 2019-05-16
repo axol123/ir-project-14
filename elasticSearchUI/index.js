@@ -62,15 +62,14 @@ app.get('/', function(req, res){
       query: {
         bool: {
           should: [
-            {wildcard: { 
-              declaration: query
-            }},
-            {match_phrase: {
+            {match_phrase_prefix: {
+              declaration: req.query['query']
+            }}
+            {mathd_phrase: {
               declaration: req.query['query']
             }}
           ]
         }
-
       }
     }
     // perform the actual search passing in the index, the search query and the type
