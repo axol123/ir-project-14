@@ -2,8 +2,12 @@
 
 # In order to run:
 
-## 1 sh crawler/run.sh
+## 1 cd crawler
 
-## 2 python3 make_intex.py
+## 2 sh run.sh
 
-## 3 node elasticSearchUI/index.js
+## 4 cd ..
+
+## 5 python3 make_intex.py
+
+## 6 node elasticSearchUI/index.js

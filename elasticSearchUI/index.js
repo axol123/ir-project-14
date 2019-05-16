@@ -55,6 +55,7 @@ app.get('/', function(req, res){
     // console.log('inside app.get')
     // console.log(req.query)
     // match_phrase_prefix
+    var query = req.query['query'] ? '*'+req.query['query']+'*' : req.query['query']
     let body = {
       size: 200,
       from: 0, 
@@ -62,7 +63,7 @@ app.get('/', function(req, res){
         bool: {
           must: {
             wildcard: { 
-              declaration: '*'+req.query['query']+'*'
+              declaration: query
             }
           }
         }
