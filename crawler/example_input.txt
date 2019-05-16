@@ -1,3 +1,10 @@
 CyC2018/CS-Notes
-iluwatar/java-design-patterns
 elastic/elasticsearch
+Snailclimb/JavaGuide
+spring-projects/spring-boot
+TheAlgorithms/Java
+square/okhttp
+google/guava
+spring-projects/spring-framework
+PhilJay/MPAndroidChart
+apache/incubator-dubbo
