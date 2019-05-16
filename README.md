@@ -4,6 +4,6 @@
 
 ## 1 sh /crawler/run.sh
 
-## 2 python make_intex.py
+## 2 python3 make_intex.py
 
 ## 3 node elasticSearchUI/index.js
