@@ -30,7 +30,7 @@ def clone_and_copy(repo :str) -> str:
             continue
         id = uuid.uuid1().__str__()
         filename = id + "-" + filepath.split("/")[-1]
-        path_index += filename + " " + filepath + "\n"
+        path_index += filename + " " + repo + "/blob/master/" + filepath + "\n"
         subprocess.run(["cp", filepath, "sources/"+filename])
 
     # remove repo when complete
