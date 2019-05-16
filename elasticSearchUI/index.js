@@ -54,20 +54,18 @@ app.get('/', function(req, res){
     // also match any data where the name is like the query string sent in
     // console.log('inside app.get')
     // console.log(req.query)
+    // match_phrase_prefix
     let body = {
       size: 200,
       from: 0, 
       query: {
-
         bool: {
-              must: [
-                {match: { declaration: req.query['query']}}
-              ]
+          must: {
+            wildcard: { 
+              declaration: '*'+req.query['query']+'*'
+            }
+          }
         }
-        // match: {
-        //   // name: req.query['q']
-        //   declaration: req.query['q']
-        // }
 
       }
     }
