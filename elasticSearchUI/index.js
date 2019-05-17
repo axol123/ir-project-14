@@ -64,7 +64,7 @@ app.get('/', function(req, res){
           should: [
             {match_phrase_prefix: {
               declaration: req.query['query']
-            }}
+            }},
             {mathd_phrase: {
               declaration: req.query['query']
             }}
