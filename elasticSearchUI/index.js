@@ -65,7 +65,7 @@ app.get('/', function(req, res){
             {match_phrase_prefix: {
               declaration: req.query['query']
             }},
-            {mathd_phrase: {
+            {match_phrase: {
               declaration: req.query['query']
             }}
           ]
